@@ -1,12 +1,42 @@
 <?php
-// Exemple simple de fuite mémoire en PHP
 
-// Création d'un tableau de manière infinie
-$data = [];
-while (true) {
-    $data[] = str_repeat("A", 1000000); // Ajout d'une chaîne de 1 million de caractères à chaque itération
-    // On laisse le script tourner sans libérer la mémoire
+class User
+{
+    private string $name;
+    private int $age;
+
+    public function __construct(string $name, int $age)
+    {
+        $this->name = $name;
+        $this->age  = $age;
+    }
+
+    public function greet(): string
+    {
+        return "Bonjour, je m'appelle {$this->name} et j'ai {$this->age} ans.";
+    }
+
+    public function isAdult(): bool
+    {
+        return $this->age >= 18;
+    }
 }
-?>
 
+class App
+{
+    public function run(): void
+    {
+        $user = new User("Storm", 20);
+        echo $user->greet() . PHP_EOL;
 
+        if ($user->isAdult()) {
+            echo "Statut : adulte" . PHP_EOL;
+        } else {
+            echo "Statut : mineur" . PHP_EOL;
+        }
+    }
+}
+
+// Point d'entrée
+$app = new App();
+$app->run();
